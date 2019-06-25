@@ -28,6 +28,7 @@
 
 import UIKit
 import MobileCoreServices
+import AVFoundation
 
 class ViewController: UIViewController {
     
@@ -52,37 +53,38 @@ class ViewController: UIViewController {
         
         imageView.layer.addSublayer(frameSublayer)
         
-        processor.process(in: imageView) { (text, elements) in
-            self.scannedText = text
-            
+//        processor.process(in: imageView) { (text, elements) in
+//        processor.process(in: imageView) { (text) in
+//            self.scannedText = text
+
             // drawing
-            elements.forEach() { feature in
-                self.frameSublayer.addSublayer(feature.shapeLayer)
-            }
-        }
+//            elements.forEach() { feature in
+//                self.frameSublayer.addSublayer(feature.shapeLayer)
+//            }
+//        }
         
-        drawFeatures(in: imageView)
+//        drawFeatures(in: imageView)
     }
     
     
     // MARK: - Remove old frames from the preloaded image
-    private func removeFrames() {
-        guard let sublayers = frameSublayer.sublayers else { return }
-        
-        for sublayer in sublayers {
-            sublayer.removeFromSuperlayer()
-        }
-    }
+//    private func removeFrames() {
+//        guard let sublayers = frameSublayer.sublayers else { return }
+//
+//        for sublayer in sublayers {
+//            sublayer.removeFromSuperlayer()
+//        }
+//    }
     
     private func drawFeatures(in imageView: UIImageView, completion: (() -> Void)? = nil) {
-        removeFrames()
-        processor.process(in: imageView) { (text, elements) in
-            elements.forEach { element in
-                self.frameSublayer.addSublayer(element.shapeLayer)
-            }
-            self.scannedText = text
-            completion?()
-        }
+//        removeFrames()
+//        processor.process(in: imageView) { (text, elements) in
+//            elements.forEach { element in
+//                self.frameSublayer.addSublayer(element.shapeLayer)
+//            }
+//            self.scannedText = text
+//            completion?()
+//        }
     }
     
     
@@ -153,13 +155,58 @@ extension ViewController: UIImagePickerControllerDelegate, UINavigationControlle
     // MARK: UIImagePickerController Delegate
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+        scannedText = ""
+        
         if let pickedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+           
             imageView.contentMode = .scaleAspectFit
             
+            
             let fixedImage = pickedImage.fixOrientation()
+//            let fixedImage = pickedImage
+            
+            guard let fixedImage2 = resize(image: fixedImage!, to: imageView.frame.size) else {
+                fatalError("Error resizing image")
+            }
+//            print("imagePickerController imageView FrameSize: ", fixedImage2)
+            
             imageView.image = fixedImage
             drawFeatures(in: imageView)
+            
+            GoogleCloudOCR().detect(from: fixedImage2) { ocrResult in
+                guard let ocrResult = ocrResult else { print("fixedImage ocrResult convert error!"); return }
+                print("viewcontroller ocrResult: ", ocrResult)
+                
+                ocrResult.annotations.forEach{
+                    self.scannedText += $0.text
+                }
+                
+            }
         }
         dismiss(animated: true, completion: nil)
+    }
+    
+    private func resize(image: UIImage, to targetSize: CGSize) -> UIImage? {
+        let size = image.size
+        
+        let widthRatio  = targetSize.width  / size.width
+        let heightRatio = targetSize.height / size.height
+        
+        // Figure out what our orientation is, and use that to form the rectangle.
+        var newSize: CGSize
+        if(widthRatio > heightRatio) {
+            newSize = CGSize(width: size.width * heightRatio, height: size.height * heightRatio)
+        } else {
+            newSize = CGSize(width: size.width * widthRatio,  height: size.height * widthRatio)
+        }
+        
+        let rect = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height + 1)
+        
+        UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
+        image.draw(in: rect)
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return newImage
     }
 }

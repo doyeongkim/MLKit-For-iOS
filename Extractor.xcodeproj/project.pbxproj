@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		8D25091122C09E79009A5A41 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8D25091022C09E79009A5A41 /* GoogleService-Info.plist */; };
 		8D25091322C09F78009A5A41 /* ScaledElementProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D25091222C09F78009A5A41 /* ScaledElementProcessor.swift */; };
+		8D25093322C1D359009A5A41 /* GoogleCloudOCR.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D25093222C1D359009A5A41 /* GoogleCloudOCR.swift */; };
+		8D25093522C1DBAB009A5A41 /* GoogleCloudOCRModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D25093422C1DBAB009A5A41 /* GoogleCloudOCRModel.swift */; };
 		BBD865A7211CBE7D0044983C /* +UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBD865A6211CBE7D0044983C /* +UIImage.swift */; };
 		BBF4E39820D2D524009569F2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBF4E39720D2D524009569F2 /* AppDelegate.swift */; };
 		BBF4E39A20D2D524009569F2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBF4E39920D2D524009569F2 /* ViewController.swift */; };
@@ -24,6 +26,8 @@
 		7A1117291CC947C64B52F404 /* Pods-Extractor.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Extractor.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Extractor/Pods-Extractor.debug.xcconfig"; sourceTree = "<group>"; };
 		8D25091022C09E79009A5A41 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8D25091222C09F78009A5A41 /* ScaledElementProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScaledElementProcessor.swift; sourceTree = "<group>"; };
+		8D25093222C1D359009A5A41 /* GoogleCloudOCR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleCloudOCR.swift; sourceTree = "<group>"; };
+		8D25093422C1DBAB009A5A41 /* GoogleCloudOCRModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleCloudOCRModel.swift; sourceTree = "<group>"; };
 		BBD865A6211CBE7D0044983C /* +UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "+UIImage.swift"; sourceTree = "<group>"; };
 		BBF4E39420D2D524009569F2 /* Extractor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Extractor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBF4E39720D2D524009569F2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -63,6 +67,14 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		8D25093622C1DBB1009A5A41 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				8D25093422C1DBAB009A5A41 /* GoogleCloudOCRModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		BBF4E38B20D2D524009569F2 = {
 			isa = PBXGroup;
 			children = (
@@ -85,6 +97,7 @@
 			isa = PBXGroup;
 			children = (
 				BBF4E39720D2D524009569F2 /* AppDelegate.swift */,
+				8D25093622C1DBB1009A5A41 /* Model */,
 				BBF4E3CA20D8203F009569F2 /* Controller */,
 				BBF4E39B20D2D524009569F2 /* Main.storyboard */,
 				BBF4E39E20D2D526009569F2 /* Assets.xcassets */,
@@ -100,6 +113,7 @@
 			children = (
 				BBF4E39920D2D524009569F2 /* ViewController.swift */,
 				8D25091222C09F78009A5A41 /* ScaledElementProcessor.swift */,
+				8D25093222C1D359009A5A41 /* GoogleCloudOCR.swift */,
 				BBD865A6211CBE7D0044983C /* +UIImage.swift */,
 			);
 			path = Controller;
@@ -220,6 +234,7 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Extractor/Pods-Extractor-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleAPIClientForREST/GoogleAPIClientForREST.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
@@ -229,6 +244,7 @@
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleAPIClientForREST.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
@@ -250,8 +266,10 @@
 			files = (
 				BBF4E39A20D2D524009569F2 /* ViewController.swift in Sources */,
 				8D25091322C09F78009A5A41 /* ScaledElementProcessor.swift in Sources */,
+				8D25093322C1D359009A5A41 /* GoogleCloudOCR.swift in Sources */,
 				BBF4E39820D2D524009569F2 /* AppDelegate.swift in Sources */,
 				BBD865A7211CBE7D0044983C /* +UIImage.swift in Sources */,
+				8D25093522C1DBAB009A5A41 /* GoogleCloudOCRModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -405,7 +423,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.razeware.Extractor;
+				PRODUCT_BUNDLE_IDENTIFIER = kr.doyeong.CloudVision;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.2;
@@ -427,7 +445,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.razeware.Extractor;
+				PRODUCT_BUNDLE_IDENTIFIER = kr.doyeong.CloudVision;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.2;

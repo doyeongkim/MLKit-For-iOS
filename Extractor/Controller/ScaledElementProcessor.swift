@@ -31,10 +31,10 @@ import Firebase
 
 // Detecting Frames
 
-struct ScaledElement {
-    let frame: CGRect
-    let shapeLayer: CALayer
-}
+//struct ScaledElement {
+//    let frame: CGRect
+//    let shapeLayer: CALayer
+//}
 
 // Creating a Text Detector
 
@@ -55,10 +55,12 @@ class ScaledElementProcessor {
     
     func process(
         in imageView: UIImageView,
-        callback: @escaping (_ text: String, _ scaledElements: [ScaledElement]) -> Void
+//        callback: @escaping (_ text: String, _ scaledElements: [ScaledElement]) -> Void
+        callback: @escaping (_ text: String) -> Void
         ) {
         // 1.
         guard let image = imageView.image else { return }
+        
         // 2.
         let visionImage = VisionImage(image: image)
         // 3.
@@ -68,28 +70,30 @@ class ScaledElementProcessor {
                 let result = result,
                 !result.text.isEmpty
                 else {
-                    callback("", [])
+//                    callback("", [])
+                    callback("")
                     return
             }
             
             // detecting frames
             
-            var scaledElements: [ScaledElement] = []
+//            var scaledElements: [ScaledElement] = []
             
-            for block in result.blocks {
-                for line in block.lines {
-                    for element in line.elements {
-                        let frame = self.createScaledFrame(featureFrame: element.frame, imageSize: image.size, viewFrame: imageView.frame)
-                        
-                        let shapeLayer = self.createShapeLayer(frame: frame)
-                        let scaledElement = ScaledElement(frame: frame, shapeLayer: shapeLayer)
-                        
-                        scaledElements.append(scaledElement)
-                    }
-                }
-            }
+//            for block in result.blocks {
+//                for line in block.lines {
+//                    for element in line.elements {
+//                        let frame = self.createScaledFrame(featureFrame: element.frame, imageSize: image.size, viewFrame: imageView.frame)
+//
+//                        let shapeLayer = self.createShapeLayer(frame: frame)
+//                        let scaledElement = ScaledElement(frame: frame, shapeLayer: shapeLayer)
+//
+//                        scaledElements.append(scaledElement)
+//                    }
+//                }
+//            }
             
-            callback(result.text, scaledElements)
+//            callback(result.text, scaledElements)
+            callback(result.text)
         }
     }
     

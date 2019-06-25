@@ -9,5 +9,5 @@ target 'Extractor' do
   pod 'Firebase/Core' => '5.5.0'
   pod 'Firebase/MLVision' => '5.5.0'
   pod 'Firebase/MLVisionTextModel' => '5.5.0'
-
+  pod ‘Alamofire’, ‘~> 5.0.0-beta.5’
 end
